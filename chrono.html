@@ -6,10 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="pannel.ico">
-    <title>Ecran Adliber</title>
+    <title>Chronomètre</title>
     
     <!----======== CSS ======== -->
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="chrono.css">
     
     <!----===== Boxicons CSS ===== -->
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
@@ -43,9 +44,9 @@
 
                 <ul class="menu-links">
                     <li class="nav-link">
-                        <a href="/">
+                        <a href="index.html">
                             <i class='bx bx-home-alt icon' ></i>
-                            <span class="text nav-text">Dashboard</span>
+                            <span class="text nav-text">Accueil</span>
                         </a>
                     </li>
 
@@ -71,7 +72,7 @@
                     </li>
 
                     <li class="nav-link">
-                        <a href="#">
+                        <a href="adliber.html">
                             <i class='bx bx-tv icon' ></i>
                             <span class="text nav-text">Ecran </span>
                         </a>
@@ -108,49 +109,88 @@
     </nav>
 
     <section class="home">
-
-        <h1>Previsualiation Ecran Adliber</h1>
-        <div class="text">
-
-
-
-            <iframe class="affidyl_web_container"
-        title="séquence web"
-        width="1180"
-        height="663.75"
-        loading="lazy"
-        allow
-        data-uuid="a98fe629-178f-479d-a895-04a6f4507e7c"
-        data-orientation="0"
-        src="https://www.adlibertv.com/ws/player/web/a98fe629-178f-479d-a895-04a6f4507e7c/eyJ3aWR0aCI6MTE4MCwiYmFja2dyb3VuZCI6IiMwMDAwMDAiLCJoZWlnaHQiOjY2My43NX0="
-        style="background-color: #000000;box-sizing: border-box;border: 3px solid #000000;">
-</iframe>
-<script src="https://www.adlibertv.com/build/player_container_web.js"></script>
-
-    
-
-</div>
-
-<iframe class="affidyl_web_container"
-        title="séquence web"
-        width="360"
-        height="630"
-        loading="lazy"
-        allow
-        data-uuid="436445bb-302f-48af-978e-e9aa095e0c7e"
-        data-orientation="3"
-        src="https://www.adlibertv.com/ws/player/web/436445bb-302f-48af-978e-e9aa095e0c7e/eyJ3aWR0aCI6MzUxLCJiYWNrZ3JvdW5kIjoiIzAwMDAwMCIsImhlaWdodCI6NjI0fQ=="
-        style="background-color: #000000;box-sizing: border-box;border: 3px solid #000000;">
-</iframe>
-<script src="https://www.adlibertv.com/build/player_container_web.js"></script>
-
-
-
-
-</div>
-
+        <div class="text">Chronomètre</div>
+        <div class="wrapper">
+            <div class="time">
+              <span class="hour">00</span>
+              <span class="colon">:</span>
+              <span class="minute">00</span>
+              <span class="colon">:</span>
+              <span class="second">00</span>
+              <span class="colon ms-colon">:</span>
+              <span class="millisecond">00</span>
+            </div>
+            <div class="buttons">
+              <button class="start">Start</button>
+              <button class="stop">Stop</button>
+              <button class="reset">Reset</button>
+            </div>
+          </div>
+          
+          <script>
+          let hr = min = sec = ms = "0" + 0,
+            startTimer;
+        
+          const startBtn = document.querySelector(".start"),
+           stopBtn = document.querySelector(".stop"),
+           resetBtn = document.querySelector(".reset");
+        
+           startBtn.addEventListener("click", start);
+           stopBtn.addEventListener("click", stop);
+           resetBtn.addEventListener("click", reset);
+        
+          function start() {
+            startBtn.classList.add("active");
+            stopBtn.classList.remove("stopActive");
+        
+            startTimer = setInterval(()=>{
+              ms++
+              ms = ms < 10 ? "0" + ms : ms;
+        
+              if(ms == 100){
+                sec++;
+                sec = sec < 10 ? "0" + sec : sec;
+                ms = "0" + 0;
+              }
+              if(sec == 60){
+                min++;
+                min = min < 10 ? "0" + min : min;
+                sec = "0" + 0;
+              }
+              if(min == 60){
+                hr++;
+                hr = hr < 10 ? "0" + hr : hr;
+                min = "0" + 0;
+              }
+              putValue();
+            },10); //1000ms = 1s
+        
+          }
+        
+          function stop() {
+            startBtn.classList.remove("active");
+            stopBtn.classList.add("stopActive");
+            clearInterval(startTimer);
+          }
+          function reset() {
+            startBtn.classList.remove("active");
+            stopBtn.classList.remove("stopActive");
+            clearInterval(startTimer);
+            hr = min = sec = ms = "0" + 0;
+            putValue();
+          }
+        
+          function putValue() {
+            document.querySelector(".millisecond").innerText = ms;
+            document.querySelector(".second").innerText = sec;
+            document.querySelector(".minute").innerText = min;
+            document.querySelector(".hour").innerText = hr;
+          }
+         </script>
+        
         
     </section>
+    
 
     <script>
         const body = document.querySelector('body'),
