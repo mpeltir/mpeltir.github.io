@@ -1,4 +1,0 @@
-AuthType Basic
-AuthName "Accès protégé"
-AuthUserFile http://mpeltier.fr/.htpasswd
-require valid-user
